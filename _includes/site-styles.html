@@ -1,4 +1,7 @@
 {% capture styles %}
   @import "alembic";
 {% endcapture %}
-<style>{{ styles | scssify | strip_newlines }}</style>
+<style>
+	{{ styles | scssify | strip_newlines }}
+	.typeset { font-family: Georgia, 'Nanum Gothic', serif !important; }
+</style>

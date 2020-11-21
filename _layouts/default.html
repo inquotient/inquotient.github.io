@@ -22,6 +22,7 @@
     {% endif %}
 
     <link rel="manifest" href="{{ "/manifest.json" | relative_url }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
     <meta name="theme-color" content="{{ site.manifest.theme_color | default: '#242e2b' }}"/>
 
     {% if site.css_inline == true %}
@@ -37,7 +38,7 @@
     {% include site-before-start.html %}
   </head>
 
-  <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
+  <body class="layout-{{ page.layout }}{% if page.title %}  {% endif %}">
     {% include site-icons.svg %}
 
     {{ content }}
