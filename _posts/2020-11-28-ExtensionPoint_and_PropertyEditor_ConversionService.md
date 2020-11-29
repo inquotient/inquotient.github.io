@@ -145,9 +145,9 @@ Long, Double, BigDecimal 등 숫자 타입을 위한 프로퍼티 에디터
 문자열을 Locale로 변환
 + PatternEditor(기본)  
 정규 표현식 문자열을 Pattern으로 변환
-+ PropertiesEditor(기본)
++ PropertiesEditor(기본)  
 문자열을 Properties로 변환
-+ URLEditor(기본)
++ URLEditor(기본)  
 문자열을 URL로 변환
 
 CustomDateEditor나 PatternEditor는 기본으로 사용되지 않는다. 따라서, XML 설정에서 Date 타입의 프로퍼티를 설정하면 익셉션을 발생시킨다. 기본으로 사용되지 않는 PropertyEditor를 사용하려면, PropertyEditor를 추가로 등록해주어야 한다.
