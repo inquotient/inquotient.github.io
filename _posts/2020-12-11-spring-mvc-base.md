@@ -1,5 +1,5 @@
 ---
-title: 스프링 MVC : 기본기
+title: 스프링 MVC - 기본기
 categories:
 - Spring
 feature_text: |
@@ -7,6 +7,9 @@ feature_text: |
 feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
+<style>
+	td { border: 1px solid #444444;}
+</style>
 ### 1. 스프링 MVC 일단 해보기
 <br/><br/>
 ### 2. 기본 흐름과 주요 컴포넌트
@@ -15,15 +18,15 @@ image: "https://picsum.photos/2560/600?image=733"
 
 #### 2.1. 스프링 MVC의 주요 구성 요소
 + DispatcherServlet  
-클라이언트의 요청을 전달받는다. 컨트롤러에게 클라이언트의 요청을 전달하고, 컨트롤러가 리턴한 결과값을 View에 전달하여 알맞은 응답을 생성하도록 한다.
+클라이언트의 요청을 전달받는다. 컨트롤러에게 클라이언트의 요청을 전달하고, 컨트롤러가 리턴한 결과값을 View에 전달하여 알맞은 응답을 생성하도록 한다.  
 + HandlerMapping  
-클라이언트의 요청 URL을 어떤 컨트롤러가 처리할지를 결정한다.
+클라이언트의 요청 URL을 어떤 컨트롤러가 처리할지를 결정한다.  
 + HandlerAdapter  
-DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달하고, 컨트롤러의 응답 결과를 DispatcherServlet이 요구하는 형식으로 변환한다. 웹 브라우저 캐시 등의 설정도 담당한다.
+DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달하고, 컨트롤러의 응답 결과를 DispatcherServlet이 요구하는 형식으로 변환한다. 웹 브라우저 캐시 등의 설정도 담당한다.  
 + 컨트롤러(Controller)  
-클라이언트의 요청을 처리한 뒤, 결과를 리턴한다. 응답 결과에서 보여줄 데이터를 모델에 담아 전달한다.
+클라이언트의 요청을 처리한 뒤, 결과를 리턴한다. 응답 결과에서 보여줄 데이터를 모델에 담아 전달한다.  
 + ModelAndView  
-컨트롤러의 처리 결과를 보여줄 뷰를 결정한다.
+컨트롤러의 처리 결과를 보여줄 뷰를 결정한다.  
 + 뷰(View)  
 컨트롤러의 처리 결과 화면을 생성한다. JSP나 Velocity 템플릿 파일 등을 이용해서 클라이언트에 응답 결과를 전송한다.
 
@@ -34,8 +37,8 @@ DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달하�
 스프링 MVC를 사용하기 위한 기본 설정 과정은 다음과 같다.  
 
 (1) web.xml에 DispatcherServlet 설정  
-(2) web.xml에 캐릭터 인코딩 처리를 위한 필터 설정
-(3) 스프링 MVC 설정
+(2) web.xml에 캐릭터 인코딩 처리를 위한 필터 설정  
+(3) 스프링 MVC 설정  
 	A. HandlerMapping, HandlerAdapter 설정  
 	B. ViewResolver 설정  
 
@@ -95,7 +98,7 @@ XML 설정 파일이 아닌 &#64;Configuration 클래스를 이용해서 설정 
 </servlet-mapping>
 ```
 
-contextClass 초기화 파라미터는 DispatcherServlet이 스프링 컨테이너를 생성할 때 사용할 구현 클래스를 지정한다. 이 값을 지정하지 않으면 XmlWebApplicationContext를 사용하는데, 이 클래스는 XML 설정 파일을 사용한다. 따라서 ,&#64;Configuration 기반의 자바 설정을 이용하는 경우 AnnotationConfigWebApplicationContext 클래스를 사용하도록 contextClass 초기화 파라미터의 값을 지정해주어야 한다.  
+contextClass 초기화 파라미터는 DispatcherServlet이 스프링 컨테이너를 생성할 때 사용할 구현 클래스를 지정한다. 이 값을 지정하지 않으면 XmlWebApplicationContext를 사용하는데, 이 클래스는 XML 설정 파일을 사용한다. 따라서, &#64;Configuration 기반의 자바 설정을 이용하는 경우 AnnotationConfigWebApplicationContext 클래스를 사용하도록 contextClass 초기화 파라미터의 값을 지정해주어야 한다.  
 
 contextConfigLocation 초기화 파라미터의 값은 XML 설정 파일의 경로 대신 &#64;Configuration 자바 클래스의 완전한 이름을 지정한다. 두 개 이상인 경우 콤마(","), 공백(" "), 탭(\t), 줄 바꿈(\n), 세미콜론(";")을 이용해서 구분한다.
 
@@ -182,9 +185,11 @@ DispatcherServlet에 대한 매핑 URL 패턴을 어떻게 설정했는냐에 �
 
 서블릿 매핑 설정에서 매핑 URL 패턴을 &#60;url-pattern&#62;/&#60;url-pattern&#62;으로 설정하면 jsp 요청을 제외한 나머지 모든 요청을 DispatcherServlet이 받게 된다.  
 
-&#60;mvc:default-servlet-handler /&#62; 설정을 추가하면, 디폴트 서블릿 핸들러가 빈으로 등록되며, 스프링 MVC는 다음과 같이 동작한다.  
+&#60;mvc:default-servlet-handler /&#62; 설정을 추가하면, 디폴트 서블릿 핸들러가 빈으로 등록되며, 스프링 MVC는 다음과 같이 동작한다.
+<br/>
 (1) 요청 URL에 매핑되는 컨트롤러를 검색한다.  
 	A. 존재할 경우, 컨트롤러를 이용해서 클라이언트 요청을 처리한다.  
+<br/>
 (2) 디폴트 서블릿 핸들러가 등록되어 있지 않다면, 404 응답 에러를 전송한다.  
 (3) 디폴트 서블릿 핸들러가 등록되어 있으면, 디폴트 서블릿 핸들러에 요청을 전달한다.
 	A. 디폴트 서블릿 핸들러는 WAS의 디폴트 서블릿에 요청을 전달한다.  
@@ -281,11 +286,11 @@ Model 클래스는 addAttribute() 메서드를 제공하고 있다. 이 메서�
 
 Model에 모델 데이터를 추가하는데 사용되는 메서드는 다음과 같다.  
 + Model addAttribute(String attrName, Object attrValue)  
-이름이 attrName이고 값이 attrValue인 모델 속성을 추가한다.
+이름이 attrName이고 값이 attrValue인 모델 속성을 추가한다.  
 + Model addAllAttribute(Map&60;String, ?&#62; attributes)  
-맵의 &#60;키, 값&#62; 쌍들을 모델 속성 이름과 값으로 추가한다.
+맵의 &#60;키, 값&#62; 쌍들을 모델 속성 이름과 값으로 추가한다.  
 + boolean containsAttribute(String attrName)  
-이름이 attrName인 모델 속성을 포함할 경우 true를 리턴한다.  
+이름이 attrName인 모델 속성을 포함할 경우 true를 리턴한다.    
 
 Model의 추가 메서드는 Model 자신을 리턴하기 때문에, 다음과 같이 메서드 체이닝 방식으로 작성해서 불필요한 코드 입력을 줄일 수 있다.
 
@@ -489,9 +494,9 @@ public class 클래스명 {
 
 이들 문자를 사용한 경로 표현 예는 다음과 같다.
 + &#64;RequestMapping("/member/?&#42;.info")  
-/member/로 시하고 확장자가 .info로 끝나는 모든 경로
+/member/로 시하고 확장자가 .info로 끝나는 모든 경로  
 + &#64;RequestMapping("/faq/f?00.fq")  
-/faq/f로 시작하고, 1글자가 사이에 위치하고 00.fq로 끝나는 모든 경로
+/faq/f로 시작하고, 1글자가 사이에 위치하고 00.fq로 끝나는 모든 경로  
 + &#64;RequestMapping("/folders/&#42;&#42;/files")
 /folders/로 시작하고, 중간에 0개 이상의 중간 경로가 존재하고 /files로 끝나는 모든 경로. 예를 들어, /folders/files, folders/1/2/3/files 등이 매핑된다.  
 
@@ -695,7 +700,8 @@ public class 클래스명 {
 
 커맨드 객체는 뷰에 전달할 모델에 자동으로 포함된다. 위 코드의 경우 memRegReq 커맨드 객체는 "memberRegistRequest"라는 이름의 모델 이름으로 뷰에 전달된다. (즉, 단순 클래스 이름의 첫 글자를 소문자로 변환한 이름을 사용한다.) 따라서, 뷰 코드에서는 "memberRegistRequest"라는 이름을 사용해서 컨맨드 객체의 값을 사용할 수 있다.  
 
-```javapublic class MemberRegistRequest {
+```java
+public class MemberRegistRequest {
 	private String email;
 	private String name;
 	private String password;
@@ -1454,13 +1460,48 @@ JSR 303의 기본 에러 메시지가 아니라 스프링이 제공하는 메시
 ##### 5.6.1. JSR 303의 주요 애노테이션
 <br/>
 JSR 303에서 제공하는 값 규칙 설정과 관련된 주요 애노테이션은 다음과 같다.  
-|애노테이션|주요 속성 (괄호는 기본 값)|설명|
-|&#64;NotNull|| |값이 null이면 안 된다.|
-|&#64;Size|min: 최소 크기, int(0)<br/>max: 최대 크기, int(int의 최대 값)|값의 크기가 min부터 max 사이에 있는지 검사한다.<br/>String인 경우 문자열의 길이를 검사한다.<br/>콜렉션인 경우 구성 요소의 개수를 검사한다.<br/>배열인 경우 배열의 길이를 검사한다.<br/>값이 null인 경우 유효한 것으로 판단한다.|
-|&#64;Min<br/>&#64;Max|value: 최소 또는 최대 값, long|숫자의 값이 지정한 값 이상(&#64;Min) 또는 이하(&#64;Max)여야 한다. BigDecimal, BigInteger, 정수 타입(int, long 등)  및 래퍼타입에 적용된다. (double과 float은 지원하지 않는다.)<br/>값이 null인 경우 유효한 것으로 판단한다.|
-|&#64;DecimalMin<br/>&#64;DecimalMax|value: 최소 또는 최대 값, String(BigDecimal 형식으로 값 표현)|숫자의 값이 지정한 값 이상(&#64;Min)또는이하(&#64;Max)인지 검사한다. BigDecimal, BigInteger, String, 정수 타입(int, long 등) 및 래퍼타입에 적용된다. (double과 float은 지원하지 않는다.)<br/>값이 null인 경우 유효한 것으로 판단한다.|
-|&#64;Digits|integer: 정수부분 숫자 길이, int<br/>fraction: 소수부분 숫자 길이, int|숫자의 정수 부분과 소수점부분의 길이가 범위에 있는지 검사한다. BigDecimal, BigInteger, String, 정수 타입(int, long 등) 및 래퍼타입에 적용된다.<br/>값이 null인 경우 유효한 것으로 판단한다.|
-|&#64;Pattern|regexp: 정규표현식, String|문자열이 지정한 패턴에 일치하는지 검사한다.<br/>값이 null인 경우 유효한 것으로 판단한다.|
+
+<table style="border: 1px solid #444444; border-collapse;">
+	<thead>
+		<tr>
+			<td>애노테이션</td>
+			<td>주요 속성 (괄호는 기본 값)</td>
+			<td>설명</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>&#64;NotNull</td>
+			<td></td>
+			<td>값이 null이면 안 된다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Size</td>
+			<td>min: 최소 크기, int(0)<br/>max: 최대 크기, int(int의 최대 값)</td>
+			<td>값의 크기가 min부터 max 사이에 있는지 검사한다.<br/>String인 경우 문자열의 길이를 검사한다.<br/>콜렉션인 경우 구성 요소의 개수를 검사한다.<br/>배열인 경우 배열의 길이를 검사한다.<br/>값이 null인 경우 유효한 것으로 판단한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Min<br/>&#64;Max</td>
+			<td>value: 최소 또는 최대 값, long</td>
+			<td>숫자의 값이 지정한 값 이상(&#64;Min) 또는 이하(&#64;Max)여야 한다. BigDecimal, BigInteger, 정수 타입(int, long 등)  및 래퍼타입에 적용된다. (double과 float은 지원하지 않는다.)<br/>값이 null인 경우 유효한 것으로 판단한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;DecimalMin<br/>&#64;DecimalMax</td>
+			<td>value: 최소 또는 최대 값, String(BigDecimal 형식으로 값 표현)</td>
+			<td>숫자의 값이 지정한 값 이상(&#64;Min)또는이하(&#64;Max)인지 검사한다. BigDecimal, BigInteger, String, 정수 타입(int, long 등) 및 래퍼타입에 적용된다. (double과 float은 지원하지 않는다.)<br/>값이 null인 경우 유효한 것으로 판단한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Digits</td>
+			<td>integer: 정수부분 숫자 길이, int<br/>fraction: 소수부분 숫자 길이, int</td>
+			<td>숫자의 정수 부분과 소수점부분의 길이가 범위에 있는지 검사한다. BigDecimal, BigInteger, String, 정수 타입(int, long 등) 및 래퍼타입에 적용된다.<br/>값이 null인 경우 유효한 것으로 판단한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Pattern</td>
+			<td>regexp: 정규표현식, String</td>
+			<td>문자열이 지정한 패턴에 일치하는지 검사한다.<br/>값이 null인 경우 유효한 것으로 판단한다.</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 위의 표를 보면 &#64;NotNull을 제외한 나머지 애노테이션은 검사 대상 값이 null인 경우 유효한 것으로 판단하는 것을 알 수 있다. 따라서, 필수 입력 값을 검사할 때에는 다음과 같이 &#64;NotNull과 &#64;Size를 함께 사용해주어야 한다.
 ```java
@@ -1471,12 +1512,42 @@ private String title;
 무심코 &#64;NotNull만 사용하면, title의 값이 빈 문자열일 경우 값 검사 과정에서 통과된다.  
 
 JSR 303에 정의된 애노테이션의 이런 단점을 보완하기 위해 Hibernate Validator 모듈은 추가로 다음의 애노테이션을 제공하고 있다. (org.hibernate.validator.constrains 패키지에 정의되어 있다.)  
-|&#64;NotEmpty| |String인 경우 빈 문자열이 아니여야 하고, 콜렉션이나 배열인 경우 크기가 1 이상이어야 한다.|
-|&#64;NotBlank| |&#64;NotEmpty와 동일하다. &#64;NotEmpty와 차이점은 String의 경우, 뒤의 공백문자를 무시한다는 점이다.|
-|&#64;Length|min: 최소 길이, int(0)<br/>max: 최대 길이, int(int의 최대 값)|문자열의 길이가 min과 max 사이에 있는지 검사한다.|
-|&#64;Range|min: 최소 값, long(0)<br/>max: 최대 값, long(long의 최대 값)|숫자 값이 min과 max 사이에 있는지 검사한다. 값의 타입이 String인 경우 숫자로 변환한 결과를 이용해서 검사한다.|
-|&#64;Email| |값이 올바른 이메일 주소인지 검사한다.|
-|&#64;URL| |값이 올바른 URL인지 검사한다.|
+<table>
+	<thead>
+		<tr>
+			<td>&#64;NotEmpty</td>
+			<td></td>
+			<td>String인 경우 빈 문자열이 아니여야 하고, 콜렉션이나 배열인 경우 크기가 1 이상이어야 한다.</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>&#64;NotBlank</td>
+			<td></td>
+			<td>&#64;NotEmpty와 동일하다. &#64;NotEmpty와 차이점은 String의 경우, 뒤의 공백문자를 무시한다는 점이다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Length</td>
+			<td>min: 최소 길이, int(0)<br/>max: 최대 길이, int(int의 최대 값)</td>
+			<td>문자열의 길이가 min과 max 사이에 있는지 검사한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Range</td>
+			<td>min: 최소 값, long(0)<br/>max: 최대 값, long(long의 최대 값)</td>
+			<td>숫자 값이 min과 max 사이에 있는지 검사한다. 값의 타입이 String인 경우 숫자로 변환한 결과를 이용해서 검사한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;Email</td>
+			<td></td>
+			<td>값이 올바른 이메일 주소인지 검사한다.</td>
+		</tr>
+		<tr>
+			<td>&#64;URL</td>
+			<td></td>
+			<td>값이 올바른 URL인지 검사한다.</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 
 ### 6. 요청 파라미터의 값 변환 처리
@@ -1618,28 +1689,62 @@ public String regist(@ModelAttribute("memberInfo") MemberRegistRequest regReq) {
 <br/>
 &#64;DateTimeFormat 애노테이션은 날짜/시간 형식을 지정하기 위해 세 개의 속성을 사용한다. 세 개의 속성은 함께 사용할 수 없으며 필요에따라 한 개의 속성만 사용해야 한다. 다음은 각 속성에서 사용할 수 있는 값을 정리한 것이다.  
 
-|속성|표|
-|style|S, M, L, F를 이용해서 날짜/시간을 표현한다. 날짜와 시간이 각각 한글자를 사용하며, 날짜나 시간을 생략할 경우 '-'를 사용한다. "SS", "S-", "-F"과 같은 값을 갖는다. 각 문자는 다음을 의미한다.  
+<table>
+	<thead>
+		<tr>
+			<td>속성</td>
+			<td>표</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>style</td>
+			<td>S, M, L, F를 이용해서 날짜/시간을 표현한다. 날짜와 시간이 각각 한글자를 사용하며, 날짜나 시간을 생략할 경우 '-'를 사용한다. "SS", "S-", "-F"과 같은 값을 갖는다. 각 문자는 다음을 의미한다.<br/> 
 + S : 짧은 표현
 + M : 중간 표현
 + L : 긴 표현
-+ F : 완전한 표현|
-|iso|&#64;DateTimeFormat의 중첩 타입인 ISO 열거 타입에 정의된 값을 사용한다.
++ F : 완전한 표현</td>
+		</tr>
+		<tr>
+			<td>iso</td>
+			<td>&#64;DateTimeFormat의 중첩 타입인 ISO 열거 타입에 정의된 값을 사용한다.<br/>
 + ISO.DATE : yyyy-MM-dd 형식 (2014-01-01)
 + ISO.TIME : HH:mm:ss.SSSZ 형식 (13:40:50.113+80:30)
-+ ISO.DATE&#95;TIME : yyyy-MM-dd'T'HH:mm:ss.SSSZ 형식|
-|pattern|java.text.DateFormat에 정의된 패턴을 사용한다.|
++ ISO.DATE&#95;TIME : yyyy-MM-dd'T'HH:mm:ss.SSSZ 형식</td>
+		</tr>
+		<tr>
+			<td>pattern</td>
+			<td>java.text.DateFormat에 정의된 패턴을 사용한다.</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 ##### 6.2.3. &#64;NumberFormat 애노테이션을 이용한 숫자 변환
 <br/>
 &#64;NumberFormat 애노테이션은 특정 형식을 갖는 문자열을 숫자 타입으로 변환할 때 사용된다. (org.springframework.format.annotation 패키지에 속해 있다.) 사용 방법은 &#64;DateTimeFormat 애노테이션과 비슷하며, &#64;NumberFormat 애노테이션의 속성은 다음과 같다. 두 속성 중 한 속성만 사용해야 한다.  
 
-|속성|값|
-|pattern|java.text.NumberFormat에 따른 숫자 형식을 입력한다.|
-|style|&#64;NumberFormat의 중첩 타입인 Style 열거 타입에 정의된 값을 사용한다.
+<table>
+	<thead>
+		<tr>
+			<td>속성</td>
+			<td>값</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>pattern</td>
+			<td>java.text.NumberFormat에 따른 숫자 형식을 입력한다.</td>
+		</tr>
+		<tr>
+			<td>style</td>
+			<td>&#64;NumberFormat의 중첩 타입인 Style 열거 타입에 정의된 값을 사용한다.<br/>
 + Style.NUMBER : 현재 로케일을 위한 숫자 형식
 + Style.CURRENCY : 현재 로케일을 위한 통화 형식
-+ Style.PERCENT : 현재 로케일을 위한 백분율 형
++ Style.PERCENT : 현재 로케일을 위한 백분율 형</td>
+		</tr>
+	</tbody>
+</table>
+
 
 #### 6.3. 글로벌 변환기 등록하기
 <br/>
@@ -1880,10 +1985,32 @@ public class 클래스명 {
 (2) 같은 클래스에 위치한 메서드가 익셉션을 처리할 수 없을 경우, &#64;ControllerAdvice 클래스에 위치한 &#64;ExceptionHandler 메서드를 검색  
 
 &#64;ControllerAdvice 애노테이션은 공통 설정을 적용할 컨트롤러 대상을 지정하기 위해 몇 가지 속성을 제공하는데, 이 속성은 다음과 같다.  
-|속성|타입|설명|
-|value<br/>basePackages|String[]|공통 설정을 적용할 컨트롤러들이 속하는 기준 패키지|
-|annotations|Class&#60;? extends Annotation&#62;[]|특정 애노테이션이 적용된 컨트롤러 대상|
-|assignableTypes|Class&#60;?&#62;[]|특정 타입 또는 그 하위 타입인 컨트롤러 대상|
+<table>
+	<thead>
+		<tr>
+			<td>속성</td>
+			<td>타입</td>
+			<td>설명</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>value<br/>basePackages</td>
+			<td>String[]</td>
+			<td>공통 설정을 적용할 컨트롤러들이 속하는 기준 패키지</td>
+		</tr>
+		<tr>
+			<td>annotations</td>
+			<td>Class&#60;? extends Annotation&#62;[]</td>
+			<td>특정 애노테이션이 적용된 컨트롤러 대상</td>
+		</tr>
+		<tr>
+			<td>assignableTypes</td>
+			<td>Class&#60;?&#62;[]</td>
+			<td>특정 타입 또는 그 하위 타입인 컨트롤러 대상</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 
 #### 8.3. &#64;ResponseStatus를 이용한 익셉션의 응답 코드 설정
@@ -1935,24 +2062,84 @@ org.springframework.http.HttpStatus 열거 타입에서 주로 사용되는 값�
 ### 9. 컨트롤러 메서드의 파라미터 타입과 리턴 타입
 <br/>
 &#64;RequestMapping 애노테이션이 적용된 메서드에서 사용할 수 있는 파라미터 타입은 다음과 같다.  
-|파라미터|설명|
-|HttpServletRequest, HttpServletResponse|요청/응답 처리를 위한 서블릿 API|
-|HttpSession|Http 세션을 위한 서블릿 API|
-|org.springframework.ui.Model, org.springframework.ui.ModelMap, java.util.Map|뷰에 데이터를 전달하기 위한 모델|
-|&#64;RequestParam|Http 요청 파라미터 값|
-|&#64;RequestHeader, &#64;CookieValue|요청 헤더와 쿠키 값|
-|&#64;PathVariable|경로 변수|
-|커맨드 객체|요청 데이터를 저장할 객체|
-|Errors, BindingResult|검증 결과를 보관할 객체. 커맨드 객체 바로 뒤에 위치해야 함|
-|&#64;RequestBody (파라미터에 적용)|요청 몸체를 객체로 변환. 요청 몸체의 JSON이나 XML을 알맞게 객체로 변환|
-|Writer, OutputStream|응답 결과를 직접 쓸 때 사용할 출력 스트림|
+<table>
+	<thead>
+		<tr>
+			<td>파라미터</td>
+			<td>설명</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>HttpServletRequest, HttpServletResponse</td>
+			<td>요청/응답 처리를 위한 서블릿 API</td>
+		</tr>
+		<tr>
+			<td>HttpSession</td>
+			<td>Http 세션을 위한 서블릿 API</td>
+		</tr>
+		<tr>
+			<td>org.springframework.ui.Model, org.springframework.ui.ModelMap, java.util.Map</td>
+			<td>뷰에 데이터를 전달하기 위한 모델</td>
+		</tr>
+		<tr>
+			<td>&#64;RequestParam</td>
+			<td>Http 요청 파라미터 값</td>
+		</tr>
+		<tr>
+			<td>&#64;RequestHeader, &#64;CookieValue</td>
+			<td>요청 헤더와 쿠키 값</td>
+		</tr>
+		<tr>
+			<td>&#64;PathVariable</td>
+			<td>경로 변수</td>
+		</tr>
+		<tr>
+			<td>커맨드 객체</td>
+			<td>요청 데이터를 저장할 객체</td>
+		</tr>
+		<tr>
+			<td>Errors, BindingResult</td>
+			<td>검증 결과를 보관할 객체. 커맨드 객체 바로 뒤에 위치해야 함</td>
+		</tr>
+		<tr>
+			<td>&#64;RequestBody (파라미터에 적용)</td>
+			<td>요청 몸체를 객체로 변환. 요청 몸체의 JSON이나 XML을 알맞게 객체로 변환</td>
+		</tr>
+		<tr>
+			<td>Writer, OutputStream</td>
+			<td>응답 결과를 직접 쓸 때 사용할 출력 스트림</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 &#64;RequestMapping 애노테이션이 적용된 메서드에서 사용할 수 있는 주요 리턴 타입은 다음과 같다.
-|리턴 타입|설명|
-|String|뷰 이름|
-|void|컨트롤러에서 응답을 직접 생성|
-|ModelAndView|모델과 뷰 정보를 함께 리턴|
-|객체|메서드에 &#64;ResponseBody가 적용된 경우, 리턴 객체를 JSON이나 XML과 같은 알맞은 응답으로 변환|
+<table>
+	<thead>
+		<tr>
+			<td>리턴 타입</td>
+			<td>설명</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>String</td>
+			<td>뷰 이름</td>
+		</tr>
+		<tr>
+			<td>void</td>
+			<td>컨트롤러에서 응답을 직접 생성</td>
+		</tr>
+		<tr>
+			<td>ModelAndView</td>
+			<td>모델과 뷰 정보를 함께 리턴</td>
+		</tr>
+		<tr>
+			<td>객체</td>
+			<td>메서드에 &#64;ResponseBody가 적용된 경우, 리턴 객체를 JSON이나 XML과 같은 알맞은 응답으로 변환</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 리턴 타입이 void인 경우 컨트롤러에서 직접 응답을 생허나는 것을 뜻한다. 예를 들어, 컨틀로러 메서드는 다음과 같이 HttpServletResponse를 이용해서 직접 응답 결과를 생성하는 경우 리턴 타입을 void로 지정해주면 된다.  
 ```java
@@ -2340,12 +2527,36 @@ HandlerMapping이 요청을 처리할 핸들러 객체를 리턴하면, 핸들�
 #### 14.2. MVC 설정에서의 HandlerMapping과 HandlerAdapter
 <br/>
 &#60;mvc:annotation-driven&#62; 설정이나 &#64;EnableWebMvc 애노테이션을 사용하면, 다음과 같은 HandlerMapping과 HandlerAdapter를 등록한다.  
-|빈 클래스|설명|
-|RequestMappingHandlerMapping|&#64;Controller 적용 빈 객체를 핸들러로 사용하는 HandlerMapping 구현. 적용 우선순위 높음.|
-|SimpleUrlHandlerMapping|&#60;mvc:default-servlet-handler&#62;, &#60;mvc:view-controller&#62; 또는 &#60;mvc:resources&#62; 태그를 사용할 때 등록되는 HandlerMapping 구현. URL과 핸들러 객체를 매핑함. 적용 우선순위 낮음.|
-|RequestMappingHandlerAdapter|&#64;Controller 적용 빈 객체에 대한 어댑터.|
-|HttpRequestHandlerAdapter|HttpRequestHandler 타입의 객체에 대한 어댑터.|
-|SimpleControllerHandlerAdapter|Controller 인터페이스를 구현한 객체에 대한 어댑터.|
+<table>
+	<thead>
+		<tr>
+			<td>빈 클래스</td>
+			<td>설명</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>RequestMappingHandlerMapping</td>
+			<td>&#64;Controller 적용 빈 객체를 핸들러로 사용하는 HandlerMapping 구현. 적용 우선순위 높음.</td>
+		</tr>
+		<tr>
+			<td>SimpleUrlHandlerMapping</td>
+			<td>&#60;mvc:default-servlet-handler&#62;, &#60;mvc:view-controller&#62; 또는 &#60;mvc:resources&#62; 태그를 사용할 때 등록되는 HandlerMapping 구현. URL과 핸들러 객체를 매핑함. 적용 우선순위 낮음.</td>
+		</tr>
+		<tr>
+			<td>RequestMappingHandlerAdapter</td>
+			<td>&#64;Controller 적용 빈 객체에 대한 어댑터.</td>
+		</tr>
+		<tr>
+			<td>HttpRequestHandlerAdapter</td>
+			<td>HttpRequestHandler 타입의 객체에 대한 어댑터.</td>
+		</tr>
+		<tr>
+			<td>SimpleControllerHandlerAdapter</td>
+			<td>Controller 인터페이스를 구현한 객체에 대한 어댑터.</td>
+		</tr>
+	</tbody>
+</table>
 <br/>
 &#64;Controller 애노테이션 기반의 컨트롤러는 주로 개발자가 구현할 코드이다. RequestMappingHandlerMapping/Adapter를 이용해서 &#64;Controller 기반 컨트롤러 객체를 핸들러로 사용하게 된다.  
 
