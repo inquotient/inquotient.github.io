@@ -12,6 +12,27 @@ image: "https://picsum.photos/2560/600?image=733"
 	td { border: 1px solid #444444; }
 </style>
 
+#### 5.2.3. SAMPLE절
+<br/>
+테이블을 샘플링하여 조회할 수 있다. 대용량 테이블에 대한 통계 값을 생성할 때 활용할 수 있다.  
+
+```sql
+SAMPLE [BLOCK] (sample_percent) [SEED (seed_value)]
+```
+
++ BLOCK  
+블록 샘플링을 사용 (지정하지 않으면 로우 샘플링)
++ sample_percent  
+샘플링 비율 (0.000001 <= sample_percent < 100)
++ SEED (seed_value)  
+항상 동일한 샘플을 반환 (seed_value는 0 ~ 4294967295 범위의 정수)
+
+아래는 SAMPLE절을 사용한 쿼리다.
+
+```sql
+SELECT * FROM dept SAMPLE(30);
+```
+
 #### 5.3.5. 슈도 칼럼
 <br/>
 테이블에 저장되지 않은 의사 칼럼으로 쿼리 수행 시점에 값이 계산된다. 구문에 따라 사용할 수 있는 슈도 칼럼이 다르다.  
