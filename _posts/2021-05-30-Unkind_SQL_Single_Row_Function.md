@@ -127,7 +127,7 @@ SELECT RTRIM(' A ') AS c1, RTRIM('ABC', 'BA') AS c2, RTRIM('ABC', 'BC') AS c3 FR
 #### 6.1.8. TRIM 함수
 <br/>
 ```
-TRIM([{{LEADING | TRAILING | BOTH} [trim_character] | trim_character} FROM] trim_source)
+TRIM([ { {LEADING | TRAILING | BOTH} [trim_character] | trim_character} FROM] trim_source)
 ```
 
 trim_source의 좌측이나 우측이나 양측에서 trim_character가 아닌 문자를 만날 때까지 trim_character를 제거한다. 위치의 기본값은 BOTH다. trim_character은 한 문자만 지정할 수 있으며 기본값은 공백이다.  
