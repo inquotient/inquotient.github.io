@@ -206,7 +206,7 @@ Flashback Table을 사용하면 지정한 시점으로 테이블을 되돌릴 �
 
 ```
 FLASHBACK TABLE [schema.]table [, [schema.]table]...
-  TO {{SCN | TIMESTAMP} expr | RESTORE POINT restore_point}}
+  TO { {SCN | TIMESTAMP} expr | RESTORE POINT restore_point}}
      [{ENABLE | DISABLE} TRIGGERS];
 ```
 
@@ -277,8 +277,8 @@ Flashback Database 기능은 지정한 시점으로 데이터베이스를 되돌
 
 ```
 FLASHBACK [STANDBY] DATABASE [database]
-    {TO {{SCN | TIMESTAMP} expr | RESTORE POINT restore_point}}
-  | {TO BEFORE {{SCN | TIMESTAMP} expr | RESETLOGS}};
+    {TO { {SCN | TIMESTAMP} expr | RESTORE POINT restore_point}}
+  | {TO BEFORE { {SCN | TIMESTAMP} expr | RESETLOGS}};
 ```
 
 Flashback Database 기능을 활성화해야 FLASHBACK DATABASE 문을 사용할 수 있다. 아래 쿼리로 활성화 여부를 확인할 수 있다.  
