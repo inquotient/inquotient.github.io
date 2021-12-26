@@ -1,7 +1,7 @@
 ---
 title: 클라우드 컴퓨팅의 이해
 categories:
-- Unkind_SQL
+- Cloud Computing
 feature_text: |
   ## 3. 클라우드 컴퓨팅의 이해
 feature_image: "https://picsum.photos/2560/600?image=733"
